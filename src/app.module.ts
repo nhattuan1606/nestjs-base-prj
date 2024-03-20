@@ -26,14 +26,14 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(GetUsernameMiddleware)
-      .exclude(
-        { path: 'api/auth/signin', method: RequestMethod.ALL },
-        { path: 'api/auth/signup', method: RequestMethod.ALL },
-      )
+      // .exclude(
+      //   { path: 'api/auth/signin', method: RequestMethod.ALL },
+      //   { path: 'api/auth/signup', method: RequestMethod.ALL },
+      // )
       .forRoutes(
-        AuthController,
-        UserController,
-        RoomController,
+        { path: 'api/auth/change-password', method: RequestMethod.ALL },
+        { path: 'api/auth/refresh-token', method: RequestMethod.ALL },
+        { path: 'api/auth/logout', method: RequestMethod.ALL },
       )
   }
 }
