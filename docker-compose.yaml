@@ -1,0 +1,31 @@
+version: '3'
+services:
+  redis:
+    image: 'redis:6-alpine'
+    # platform: linux/x86_64
+    ports:
+      - 6389:6379
+    volumes:
+      - ./redis-data:/data
+  backend:
+    build: .
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      # app
+      - NODE_ENV=development
+      - APP_NAME=nest-boilerplate
+      - PORT=3000
+      # database
+      - DATABASE_URL=mongodb://127.0.0.1:27017/adotsystem
+      # jwt
+      - JWT_ACCESS_TOKEN_SECRET=access-secret
+      - JWT_ACCESS_TOKEN_EXPIRATION_TIME=28800
+      - JWT_REFRESH_TOKEN_SECRET=refresh-secret
+      - JWT_REFRESH_TOKEN_EXPIRATION_TIME=604800
+      # redis
+      - REDIS_HOST=redis
+      - REDIS_PORT=6389
+    depends_on:
+      - redis
